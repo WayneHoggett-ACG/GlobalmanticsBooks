@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-books_api_url = os.getenv('BOOKS_API_URL', 'http://localhost:5154')
+books_api_url = os.getenv('BOOKS_API_URL', 'http://localhost:5000')
 
 @app.route('/')
 def home():
