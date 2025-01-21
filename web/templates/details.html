@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Globomantics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="{{ url_for('home') }}"><h1><img src="{{ url_for('static', filename='img/globomantics-logo-white.png') }}"></h1></a>
+        <div class="navigation-button">
+            <a href="{{ url_for('home') }}"><button>Home</button></a>
+          </div>
+        <div class="navigation-button">
+            <a href="{{ url_for('catalog') }}"><button>Catalog</button></a>
+          </div>
+        <div class="header-cart">
+          <img src="{{ url_for('static', filename='img/cart.svg') }}" />
+          <p><span>0</span> books</p>
+        </div>
+      </header>
+      <section class="section-details">
+        <div class="details-left">
+          <a href="{{ url_for('catalog') }}"><button>Back</button></a>
+        </div>
+      </section>
+      <section class="section-details">
+        <div class="details-left">
+          <img class="book-image-details" src="{{ url_for('static', filename='img/' + book.image) }}" alt="{{ book.title }}" />
+        </div>
+        <div class="details-right">
+          <h2>{{ book.title }}</h2>
+          <div class="book-author">{{ book.author }}</div>
+          <div class="book-date">Published: {{ book.published }}</div>
+          <div class="book-description">{{ book.synopsis }}</div>
+          <div class="book-price-container">
+            <div class="book-price">${{ book.price }}</div>
+          </div>
+        </div>
+      </section>
+      <section class="section-details divider">
+      </section>
+      <section class="section-details">
+        <div class="details-left">
+        </div>
+        <div class="details-right details-right-purchasing">
+          <p>Quantity</p>
+          <select name="filter-dropdown">
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+          <div class="book-purchase-button">
+            <a href="basket.html"><button>Place Order</button></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
