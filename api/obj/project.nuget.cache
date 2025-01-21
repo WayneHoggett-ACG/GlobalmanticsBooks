@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sjV34VpCD28=",
+  "dgSpecHash": "qLWCBgod6YU=",
   "success": true,
-  "projectFilePath": "/Users/wayne-hoggett/Documents/GitHub/AKSBooksApp/api/api.csproj",
+  "projectFilePath": "/Users/wayne-hoggett/Documents/GitHub/GlobalmanticsBooks/api/api.csproj",
   "expectedPackageFiles": [
     "/Users/wayne-hoggett/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/wayne-hoggett/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",

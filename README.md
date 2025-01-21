@@ -1,1 +1,1 @@
-# GlobalmanticsBooks
+# Globalmantics Books
