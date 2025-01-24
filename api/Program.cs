@@ -24,7 +24,7 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.Initialize(context);
 }
 
-var pathRoute = app.MapGet("/path", () =>
+var pathRoute = app.MapGet("/", () =>
 {
     return Results.Ok("API is operational.");
 });
