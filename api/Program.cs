@@ -24,6 +24,11 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.Initialize(context);
 }
 
+var pathRoute = app.MapGet("/path", () =>
+{
+    return Results.Ok("API is operational.");
+});
+
 app.MapGet("/books", async (BookDb db) =>
     await db.Books.ToListAsync());
 
