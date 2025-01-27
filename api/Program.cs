@@ -24,21 +24,24 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.Initialize(context);
 }
 
-var pathRoute = app.MapGet("/", () =>
+// Define the routes, PREFIX_URL_PATH should start with a / if defined
+var prefixUrlPath = Environment.GetEnvironmentVariable("PREFIX_URL_PATH") ?? string.Empty;
+
+var pathRoute = app.MapGet($"{prefixUrlPath}/", () =>
 {
     return Results.Ok("API is operational.");
 });
 
-app.MapGet("/books", async (BookDb db) =>
+app.MapGet($"{prefixUrlPath}/books", async (BookDb db) =>
     await db.Books.ToListAsync());
 
-app.MapGet("/books/{id}", async (int id, BookDb db) =>
+app.MapGet($"{prefixUrlPath}/books/{{id}}", async (int id, BookDb db) =>
     await db.Books.FindAsync(id)
         is Book book
             ? Results.Ok(book)
             : Results.NotFound());
 
-app.MapPost("/book/add", async (Book book, BookDb db) =>
+app.MapPost($"{prefixUrlPath}/book/add", async (Book book, BookDb db) =>
 {
     db.Books.Add(book);
     await db.SaveChangesAsync();
@@ -46,7 +49,7 @@ app.MapPost("/book/add", async (Book book, BookDb db) =>
     return Results.Created($"/books/{book.Id}", book);
 });
 
-app.MapPut("/books/update/{id}", async (int id, Book inputBook, BookDb db) =>
+app.MapPut($"{prefixUrlPath}/books/update/{{id}}", async (int id, Book inputBook, BookDb db) =>
 {
     var book = await db.Books.FindAsync(id);
 
@@ -60,7 +63,7 @@ app.MapPut("/books/update/{id}", async (int id, Book inputBook, BookDb db) =>
     return Results.NoContent();
 });
 
-app.MapDelete("/books/delete/{id}", async (int id, BookDb db) =>
+app.MapDelete($"{prefixUrlPath}/books/delete/{{id}}", async (int id, BookDb db) =>
 {
     if (await db.Books.FindAsync(id) is Book book)
     {
