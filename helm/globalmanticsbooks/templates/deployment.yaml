@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: api
+  name: api
+  namespace: globalmanticsbooks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - image: {{ .Values.ContainerRegistryFQDN }}/{{ .Values.APIImageName }}:{{ .Values.APIImageTag }}
+        imagePullPolicy: IfNotPresent
+        name: api
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web
+  name: web
+  namespace: globalmanticsbooks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - image: {{ .Values.ContainerRegistryFQDN }}/{{ .Values.WebAppImageName }}:{{ .Values.WebAppImageTag }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: BOOKS_API_URL
+          value: http://api
+        name: web
+        ports:
+        - containerPort: 80
+          protocol: TCP

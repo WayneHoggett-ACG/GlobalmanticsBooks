@@ -1,0 +1,5 @@
+ContainerRegistryFQDN: null
+APIImageName: api
+APIImageTag: v1
+WebAppImageName: web
+WebAppImageTag: v1
