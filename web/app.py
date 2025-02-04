@@ -12,7 +12,13 @@ prefix_url_path = os.getenv('PREFIX_URL_PATH', '')
 @app.route(f'{prefix_url_path}/')
 def home():
     print("Fetching books to find the latest one")
-    response = requests.get(f'{books_api_url}/books')
+    try:
+        response = requests.get(f'{books_api_url}/books', timeout=5)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching books from API: {e}")
+        return "Error fetching books from API", 500
+
     if response.status_code == 200:
         books = response.json()
         latest_book = max(books, key=lambda book: book['published'])
