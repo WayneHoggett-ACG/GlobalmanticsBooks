@@ -15,7 +15,7 @@ import os
 # )
 # logger = logging.getLogger("globalmantics.web")  # Logging telemetry will be collected from logging calls made with this logger and all of it's children loggers.
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
 # Get the URL of the books API from the environment variable
 books_api_url = os.getenv('BOOKS_API_URL', 'http://localhost:5000')
