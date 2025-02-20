@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
+// using Azure.Monitor.OpenTelemetry.AspNetCore;
 
 // Add services to the container
 var builder = WebApplication.CreateBuilder(args);
 
 // Add OpenTelemetry and configure it to use Azure Monitor
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
+// builder.Services.AddOpenTelemetry().UseAzureMonitor();
 //Set Environment Variable APPLICATIONINSIGHTS_CONNECTION_STRING
 
 // Use SQL Server if the connection string is present, otherwise use in-memory database
