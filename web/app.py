@@ -24,18 +24,18 @@ prefix_url_path = os.getenv('PREFIX_URL_PATH', '')
 
 @app.route(f'{prefix_url_path}/')
 def home():
-    logger.info("Fetching books to find the latest one")
+    #logger.info("Fetching books to find the latest one")
     try:
         response = requests.get(f'{books_api_url}/books', timeout=5)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        logger.error(f"Error fetching books from API: {e}")
+        #logger.error(f"Error fetching books from API: {e}")
         return "Error fetching books from API", 500
 
     if response.status_code == 200:
         books = response.json()
         latest_book = max(books, key=lambda book: book['published'])
-        logger.info("Latest book details:", latest_book)
+        #logger.info("Latest book details:", latest_book)
     else:
         return "Books not found", 404
 
@@ -43,7 +43,7 @@ def home():
 
 @app.route(f'{prefix_url_path}/details/<int:book_id>')
 def details(book_id):
-    logger.info("Getting book details for book id: ", book_id)
+    #logger.info("Getting book details for book id: ", book_id)
     response = requests.get(f'{books_api_url}/books/{book_id}')
     if response.status_code == 200:
         book = response.json()
