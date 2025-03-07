@@ -1,12 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Azure.Monitor.OpenTelemetry.AspNetCore;
+using OpenTelemetry.Resources;
 
 // Add services to the container
 var builder = WebApplication.CreateBuilder(args);
 
 // Add OpenTelemetry and configure it to use Azure Monitor if APPLICATIONINSIGHTS_CONNECTION_STRING is not null or empty
 if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING"))) {
-    builder.Services.AddOpenTelemetry().UseAzureMonitor();
+    builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource =>
+    {
+        resource.AddService(
+            serviceName: "Globalmantics Books API"
+        );
+    })
+    .UseAzureMonitor();
 }
 //Set Environment Variable APPLICATIONINSIGHTS_CONNECTION_STRING
 

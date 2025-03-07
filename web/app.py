@@ -7,12 +7,19 @@ import logging
 # Import the `configure_azure_monitor()` function from the
 # `azure.monitor.opentelemetry` package.
 from azure.monitor.opentelemetry import configure_azure_monitor
+from opentelemetry.sdk.resources import Resource
+
+# Define a custom resource with the service name (maps to cloud_RoleName)
+custom_resource = Resource(attributes={
+    "service.name": "Globalmantics Books Web App"  # This sets the Cloud Role Name in Application Insights
+})
 
 # Configure OpenTelemetry to use Azure Monitor with the 
 # if APPLICATIONINSIGHTS_CONNECTION_STRING environment variable is not null or empty, configure monitoring
 if os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"):
     configure_azure_monitor(
         logger_name="globalmantics.web",  # Set the namespace for the logger in which you would like to collect telemetry for if you are collecting logging telemetry. This is imperative so you do not collect logging telemetry from the SDK itself.
+        resource=custom_resource,  # Set the resource name for the telemetry. This is imperative so you can identify the telemetry data coming from your application.
     )
     logger = logging.getLogger("globalmantics.web")  # Logging telemetry will be collected from logging calls made with this logger and all of it's children loggers.
 
