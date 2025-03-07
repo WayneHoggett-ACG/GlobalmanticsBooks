@@ -8,11 +8,15 @@ import logging
 # `azure.monitor.opentelemetry` package.
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry.sdk.resources import Resource
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
 # Define a custom resource with the service name (maps to cloud_RoleName)
 custom_resource = Resource(attributes={
     "service.name": "Globalmantics Books Web App"  # This sets the Cloud Role Name in Application Insights
 })
+
+app = Flask(__name__)
 
 # Configure OpenTelemetry to use Azure Monitor with the 
 # if APPLICATIONINSIGHTS_CONNECTION_STRING environment variable is not null or empty, configure monitoring
@@ -22,8 +26,8 @@ if os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"):
         resource=custom_resource,  # Set the resource name for the telemetry. This is imperative so you can identify the telemetry data coming from your application.
     )
     logger = logging.getLogger("globalmantics.web")  # Logging telemetry will be collected from logging calls made with this logger and all of it's children loggers.
-
-app = Flask(__name__)
+    FlaskInstrumentor().instrument_app(app)
+    RequestsInstrumentor().instrument()
 
 # Get the URL of the books API from the environment variable
 books_api_url = os.getenv('BOOKS_API_URL', 'http://localhost:5000')

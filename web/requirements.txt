@@ -3,3 +3,5 @@ requests
 gunicorn
 azure-monitor-opentelemetry
 opentelemetry-sdk
+opentelemetry-instrumentation-flask
+opentelemetry-instrumentation-requests
